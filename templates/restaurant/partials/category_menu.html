@@ -1,0 +1,9 @@
+{% for category in categorys %}
+<a href="{% url 'restaurant:category' category.pk category.slug %}">
+    <li style="margin: 10px 10px; position: relative; text-align: right; border-radius: 10px;" class="nav-item myclassforli">
+        <h1 style="position: absolute; right: 12px; font-size: xx-large; color: aliceblue; z-index: 5;">{{ category.title }}</h1>
+        <img style="width: 250px; height: 200px;" src="{{ category.image.url }}" alt="{{ category.title }}">
+        <div style="width: 250px; height: 200px; color: rebeccapurple; position: absolute; z-index: 4; left: 0; bottom: 0; background-color: black; opacity: 22%; border-radius: 6%;"></div>
+    </li>
+</a>
+{% endfor %}

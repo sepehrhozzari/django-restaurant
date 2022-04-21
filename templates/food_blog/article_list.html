@@ -1,0 +1,84 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+
+
+{% block main %}
+    <!-- Carousel Start -->
+    <div class="carousel">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="{% static 'restaurant/img/food_blog1.jpg' %}" alt="عکس فود بلاگ">
+                    </div>
+                    <div dir="rtl" class="carousel-text">
+                        <h1 style="color: aliceblue; margin-bottom: 10px;">بخش مقالات برای غذا ها</h1>
+                        <p class="mr-5">
+                            بهترین و با جزئیات ترین مقاله ها برای آشپزی
+                        </p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="{% static 'restaurant/img/food_blog6.jpg' %}" alt="عکس فود بلاگ">
+                    </div>
+                    <div dir="rtl" class="carousel-text">
+                        <h2 style="color: aliceblue;">با خوندن این مقالات یک آشپز حرفه ای میشی</h2>
+                        <p>
+                            با کیفیت ترین روش ها برای آشپزی
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+    <!-- Blog Start -->
+    <div class="blog">
+        <div class="container">
+            <div class="section-header text-center">
+                <p>فود بلاگ</p>
+                <h2>آخرین ها از فود بلاگ</h2>
+            </div>
+            <div dir="rtl" class="row text-right">
+                {% for article in object_list %}
+                <div class="col-md-6">
+                    <div class="blog-item">
+                        <div class="blog-img">
+                            <img src="{{ article.thumbnail.url }}" alt="تصویر مقاله {{ article.title }}">
+                        </div>
+                        <div class="blog-content">
+                            <h2 class="blog-title">{{ article.title }}</h2>
+                            <div class="blog-meta">
+                                <p><i class="far fa-user" style="margin-left: 3px;"></i>{{ article.author.username }}</p>
+                                <p><i class="far fa-calendar-alt" style="margin-left: 3px;"></i>{{ article.jpublish }}</p>
+                                <p><i class="far fa-comments" style="margin-left: 3px;"></i>{{ article.comments.count }}</p>
+                            </div>
+                            <div class="blog-text">
+                                <p>
+                                    {{ article.description|truncatewords:30 }}
+                                </p>
+                                <a class="btn custom-btn" href="{% url 'food_blog:article_detail' article.pk article.slug %}">بیشتر بخوانید</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_next %}
+                            <li class="page-item"><a class="page-link" href="{% url 'food_blog:article_list' page_obj.next_page_number %}">صفحه بعدی</a></li>
+                        {% endif %}
+                        {% if page_obj.has_previous %}
+                            <li class="page-item"><a class="page-link" href="{% url 'food_blog:article_list' page_obj.previous_page_number %}">صفحه قبلی</a></li>
+                        {% endif %}
+                    </ul> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+{% endblock %}

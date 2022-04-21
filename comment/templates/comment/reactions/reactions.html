@@ -1,0 +1,25 @@
+{% load i18n %}
+<div style="margin-top: 30px;" class="js-comment-reactions">
+    <span style="position: absolute; bottom: 12px; right: 60px;" class="js-like-number text-dark">{{ comment.likes }}</span>
+    {% url 'comment:react' pk=comment.id reaction='like' as like_url %}
+    <a style="position: absolute; bottom: 14px; right: 70px;" title="{% trans "like" %}" class="{% block like_link_cls %} {% endblock like_link_cls %}
+        {% if user.is_authenticated %}
+        js-comment-reaction" href="{{ like_url }}"
+        {% else %}
+        " href="{{ login_url }}/?next={{ request.build_absolute_uri }}"
+        {% endif %}
+    >
+        {% include "comment/reactions/like_icon.html" %}
+    </a>
+    <span style="position: absolute; bottom: 12px; right: 20px;" class="js-dislike-number text-dark">{{ comment.dislikes }}</span>
+    {% url 'comment:react' pk=comment.id reaction='dislike' as dislike_url %}
+    <a style="position: absolute; bottom: 10px; right: 30px; title="{% trans "dislike" %}" class="{% block dislike_link_cls %} {% endblock dislike_link_cls %}
+        {% if user.is_authenticated %}
+        js-comment-reaction" href="{{ dislike_url }}"
+        {% else %}
+        " href="{{ login_url }}/?next={{ request.build_absolute_uri }}"
+        {% endif %}
+    >
+        {% include "comment/reactions/dislike_icon.html" %}
+    </a>
+    </div>

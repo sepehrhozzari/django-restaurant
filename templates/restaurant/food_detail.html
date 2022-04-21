@@ -1,0 +1,132 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+{% load comment_tags %}
+{% load restaurant_tags %}
+
+{% block main %}
+            <!-- Carousel Start -->
+            <div class="carousel">
+                <div class="container-fluid">
+                    <div class="owl-carousel">
+                        <div class="carousel-item">
+                            <div class="carousel-img">
+                                <img src="{% static 'restaurant/img/quick-delivery2.jpg' %}" alt="Image">
+                            </div>
+                            <div class="carousel-text">
+                                <h1>در سریعترین زمان ممکن</h1>
+                                <p>
+                                    رستوران ما در سریعترین زمان ممکن سفارشتان را به آدرسی که تعیین کرده اید میرساند
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="carousel-img">
+                                <img src="{{ object.image.url }}" alt="Image">
+                            </div>
+                            <div class="carousel-text">
+                                <h1>{{ object.name }}</h1>
+                                <p>
+                                    {{ object.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</div>
+<!-- Carousel End -->
+<!-- Menu Start -->
+<div class="menu">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2><mark>{{ food.name }}</mark></h2>
+            <h2></h2>
+        </div>
+        <div class="menu-tab">
+            <div class="tab-content">
+                <div id="burgers" class="container tab-pane active">
+                    <div class="row">
+                        <div dir="rtl" class="col-lg-7 col-md-12" style="text-align: right;">
+                                <div class="menu-item">
+                                    <div class="menu-detail">
+                                        <h6>توضیحات: {{ object.description }}</h6>
+                                        <h6>آشپز: {{ object.chef.get_full_name }}</h6>
+                                        <h6>جزو دسته‌بندی های: 
+                                            {% for category in object.category.all %}
+                                                {{ category.title }} ,
+                                            {% endfor %}
+                                        </h6>
+                                        {% if food.check_super_sell %}
+                                        <strong class="mt-2" style="color:  red; font-size: large;">تخفیف ویژه</strong>
+                                        {% endif %}
+                                        <strong><del style="color: red; font-size: large;">{{ food.price|persian_price_word }}</del></strong>
+                                        <h3 style="text-align: right; color: #fbaf32; font-size: large;"><strong>{{ food.discount_price|persian_price_word }}</strong></h3>
+                                        
+                                        
+                                        <h6>بازدید ها: {{ object.hits.count }}</h6>
+                                        <div class="mt-2" style="display: flex; flex-direction: row; justify-content: space-between; width: 60px;">
+                                            <a class="like-dislike-btn" data-pk="{{ food.pk }}" href="{% url 'restaurant:dislike' food.pk %}" style="font-size: 17px;margin-top: 1px;"><i class="fa fa-thumbs-down"></i></a>
+                                            <span id="dislike-count-{{ food.pk }}" style="margin-right: 2px;">{{ food.dislikes.count }}</span>
+                                            <a class="like-dislike-btn" data-pk="{{ food.pk }}" href="{% url 'restaurant:like' food.pk %}" style="font-size: 17px; margin-top: -2px; margin-right: 15px;"><i class="fa fa-thumbs-up"></i></a>
+                                            <span id="like-count-{{ food.pk }}" style="margin-right: 2px;">{{ food.likes.count }}</span>
+                                        </div>
+                                        <a style="width: 28%; padding: 6px;" class="btn btn-primary mt-2" href="{% url 'cart:add_to_cart' object.pk object.name %}">
+                                            افزودن به سبد خرید<i class="fa fa-cart-plus mr-2"></i></a>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-lg-5 d-none d-lg-block">
+                            <img src="{{ food.image.url }}" alt="Image">
+                        </div>
+                    </div>
+                    {% render_comments object request %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Menu End -->
+
+
+{% block extra_scripts %}
+    <!-- scripts for like and dislike with ajax -->
+    <script>
+        function get_likes_dislikes(link, id) {
+            $.ajax({
+                url: link,
+                success: function(s) {
+                    if (s.is_authenticated) {
+                        $('#like-count-' + id).html(s.likes)
+                        $('#dislike-count-' + id).html(s.dislikes)
+                    } else {
+                        $('#alert-login-' + id).css({
+                            'display': 'inline'
+                        })
+                    }
+                },
+                error: function(e) {
+                    console.log("error 2")
+                }
+            })
+        }
+
+
+        $(".like-dislike-btn").click(function(e) {
+            e.preventDefault()
+            var id = $(this).attr("data-pk")
+            var link = "/api/" + id
+            var url = $(this).attr("href")
+            $.ajax({
+                url: url,
+                success: function(success) {
+                    get_likes_dislikes(link, id)
+                },
+                error: function(error) {
+                    console.log("error 1")
+                }
+            })
+        })
+    </script>
+{% endblock %}
+
+
+{% endblock %}

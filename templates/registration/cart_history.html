@@ -1,0 +1,74 @@
+{% extends "registration/base.html" %}
+{% load gravatar %}
+{% load humanize %}
+{% load restaurant_tags %}
+
+{% block main %}
+    <div class="row mt-2">
+        <div dir="rtl" class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                    {% if user.profile_picture %}
+                        <img style="border-radius: 50%;" src="{{ user.profile_picture.url }}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                    {% else %}
+                        <img style="border-radius: 50%;" src="{% gravatar_url user.email 150 %}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                    {% endif %}
+                    <div style="height: 80px; width: 1000px; display: flex; flex-direction: column;">
+                        <span>نام کاربری : {{ user.username }}</span>
+                        <span>ایمیل : {{ user.email }}</span>
+                        {% if user.address %}
+                            <span>آدرس محل : {{ user.address }}</span>
+                        {% else %}
+                            <span>آدرس محل : شما آدرسی ثبت نکرده اید!</span>
+                            <a style="font-size: 14px;" href="{% url 'account:address' %}">برای ثبت آدرس کلیک کنید</a>
+                        {% endif %}
+                    </div>
+                    <div class="button-wrapper">
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="card">
+                {% if messages %}
+                    {% for message in messages %}
+                        <h5 class="alert alert-{{ message.tags }}" style="text-align: right; font-size: 18px; margin: 10px 45px 0px 45px;">{{ message }}</h5>
+                    {% endfor %}
+                {% endif %}
+                <h5 class="card-header">تاریخچه سفارشات:</h5>
+                <div class="table-responsive text-nowrap">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>محصولات</th>
+                        <th>توضیحات</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        {% for cart in object_list %}
+                            <tr>
+                                <th>{{ forloop.counter|ordinal }} سبد خرید</th>
+                                <td class="w-75">
+                                    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+                                        {% for cart_item in cart.items.optimazed %}
+                                            <span style="color: rgba(0, 0, 0, 0.751);">{{ cart_item }}</span>|
+                                        {% endfor %}
+                                    </div>
+                                </td>
+                                <td style="display: flex; flex-direction: column;" scope="row">
+                                    <span style="color: rgba(0, 0, 0, 0.751); margin-bottom: 6px;">تاریخ پرداخت: {{ cart.jpaid_time }} </span>
+                                    <del class="text-danger">قیمت کلی: {{ cart.total_price|persian_price_word }}</del>
+                                    <span style="color: rgb(13, 158, 13);"> قیمت کلی با <b>تخفیف</b>: {{ cart.total_discount_price|persian_price_word }}</span>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td><strong class="text-danger">شما درحال حاضر هیچ خریدی را انجام نداده اید!</strong></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+{% endblock %}

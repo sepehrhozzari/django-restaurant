@@ -1,0 +1,61 @@
+{% extends "registration/base.html" %}
+{% load gravatar %}
+{% load humanize %}
+
+
+{% block main %}
+<div class="row mt-2">
+    <div dir="rtl" class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-body">
+              <div class="d-flex align-items-start align-items-sm-center gap-4">
+                {% if user.profile_picture %}
+                    <img style="border-radius: 50%;" src="{{ user.profile_picture.url }}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                {% else %}
+                    <img style="border-radius: 50%;" src="{% gravatar_url user.email 150 %}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                {% endif %}
+                <div style="height: 80px; width: 1000px; display: flex; flex-direction: column;">
+                    <span>نام کاربری : {{ user.username }}</span>
+                    <span>ایمیل : {{ user.email }}</span>
+                    {% if user.address %}
+                        <span>آدرس محل : {{ user.address }}</span>
+                    {% else %}
+                        <span>آدرس محل : شما آدرسی ثبت نکرده اید!</span>
+                        <a style="font-size: 14px;" href="{% url 'account:address' %}">برای ثبت آدرس کلیک کنید</a>
+                    {% endif %}
+                </div>
+                <div class="button-wrapper">
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header">میز های رزرو شده:</h5>
+            <div class="table-responsive text-nowrap">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>تاریخ</th>
+                    <th>تعداد مهمان</th>
+                    <th>شماره تلفن</th>
+                  </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                    {% for booked_table in user.booked_tables.all %}
+                        <tr>
+                            <th>{{ forloop.counter|ordinal }} سفارش</th>
+                            <td><strong>{{ booked_table.jdate }}</strong></td>
+                            <td><span style="font-size: 13px;" class="badge bg-label-primary me-1">{{ booked_table.guest }}</span></td>
+                            <td><span style="font-size: 14px;" class="badge bg-label-primary me-1">{{ booked_table.phone_number }}</span></td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td><strong class="text-danger">شما فعلا هیچ میزی را رزرو نکرده اید!</strong></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+{% endblock %}

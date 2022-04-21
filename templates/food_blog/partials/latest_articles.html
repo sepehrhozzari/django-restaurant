@@ -1,0 +1,23 @@
+{% for article in articles %}
+    <div dir="rtl" class="col-md-6 text-right">
+        <div class="blog-item">
+            <div class="blog-img">
+                <img src="{{ article.thumbnail.url }}" alt="تصویر مقاله {{ article.title }}">
+            </div>
+            <div class="blog-content">
+                <h2 class="blog-title">{{ article.title }}</h2>
+                <div class="blog-meta">
+                    <p><i class="far fa-user" style="margin-left: 3px;"></i>{{ article.author.username }}</p>
+                    <p><i class="far fa-calendar-alt" style="margin-left: 3px;"></i>{{ article.jpublish }}</p>
+                    <p><i class="far fa-comments" style="margin-left: 3px;"></i>{{ article.comments.count }}</p>
+                </div>
+                <div class="blog-text">
+                    <p>
+                        {{ article.description|truncatewords:30 }}
+                    </p>
+                    <a class="btn custom-btn" href="{% url 'food_blog:article_detail' article.pk article.slug %}">بیشتر بخوانید</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

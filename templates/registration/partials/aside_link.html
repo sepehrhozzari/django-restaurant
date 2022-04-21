@@ -1,0 +1,6 @@
+<li class="menu-item {% if request.resolver_match.url_name == link_name %}active{% endif %}">
+<a href="{% url link %}" class="menu-link">
+    <i class="{{ classes }}"></i>
+    <div data-i18n="Analytics">{{ content }}</div>
+</a>
+</li>

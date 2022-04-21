@@ -1,0 +1,178 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block main %}
+                    <!-- Carousel Start -->
+                    <div class="carousel">
+                        <div class="container-fluid">
+                            <div class="owl-carousel">
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="{% static 'restaurant/img/reserve.jpg' %}" alt="Image">
+                                    </div>
+                                    <div class="carousel-text">
+                                        <h1>رزرو کردن یک میز</h1>
+                                        <p>
+                                            
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="{% static 'restaurant/img/reserve2.jpg' %}" alt="{{ food.name }}">
+                                    </div>
+                                    <div dir="rtl" class="carousel-text">
+                                        <h2 style="color: aliceblue;">به راحتی با پرکردن یک فرم</h2>
+                                        <p>
+                                            میز را در تاریخ دلخواه تحویل بگیرید
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel End -->
+        <!-- Booking Start -->
+        <div class="booking">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div dir="rtl" class="col-lg-7 text-right">
+                        <div class="booking-content">
+                            <div class="section-header">
+                                <p>رزور کردن یک میز</p>
+                                <h2>میز خود را برای لحظات شاد رزرو کنید</h2>
+                            </div>
+                            <div class="about-text">
+                                <p>
+                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="booking-form">
+                            <form method="post">{% csrf_token %}
+                                {% if form.non_field_errors %}
+                                    <div class="errors">
+                                        {% for error in form.non_field_errors %}
+                                            <span>{{error}}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="control-group">
+                                    <div style="margin-bottom: 2px;" class="input-group">
+                                        <input id="id_phone_number" name="phone_number" type="text" class="form-control" placeholder="شماره تلفن">
+                                        <div style="
+                                        width: 1000px;
+                                      direction: rtl;
+                                      text-align: right;
+                                      margin: 5px 2px;
+                                      color: black;
+                                      font-size: 12px;
+                                      ">{{ form.phone_number.help_text }}</div>
+                                        
+                                        {% if form.phone_number.errors %}
+                                        <div style="
+                                          width: 1000px;
+                                        direction: rtl;
+                                        text-align: right;
+                                        margin: 5px 3px;
+                                        color: red;
+                                        font-size: 17px;
+                                        ">
+                                            {% for error in form.phone_number.errors %}
+                                                <span>{{error}}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                        <div class="input-group-append">
+                                            <div class="input-group-text"><i class="fa fa-mobile-alt"></i></div>
+                                        </div>
+
+                                </div>
+                                <div class="control-group">
+                                    <div class="input-group">
+                                        <label style="width: 600px; direction: rtl; text-align: right; color: black;" for="phone_number">{{ form.guest.label }}</label>
+                                        <select class="custom-select form-control" id="id_guest" name="guest">
+                                            <option value="1">یک نفر</option>
+                                          
+                                            <option value="2" selected="">دو نفر</option>
+                                          
+                                            <option value="3">سه نفر</option>
+                                          
+                                            <option value="4">چهار نفر</option>
+                                          
+                                            <option value="5">پنج نفر</option>
+                                          
+                                            <option value="6">شیش نفر</option>
+                                          
+                                            <option value="7">هفت نفر</option>
+                                          
+                                            <option value="8">هشت نفر</option>
+                                          
+                                            <option value="9">نه نفر</option>
+                                          
+                                            <option value="10">ده نفر</option>
+                                          
+                                            <option value="11">یازده نفر</option>
+                                          
+                                            <option value="12">دوازده نفر</option>
+                                          
+                                            <option value="13">سیزده نفر</option>
+                                          
+                                            <option value="14">چهارده نفر</option>
+                                          
+                                            <option value="15">پانزده نفر</option>
+                                        </select>
+                                        {% if form.guest.errors %}
+                                        <div style="
+                                          width: 1000px;
+                                        direction: rtl;
+                                        text-align: right;
+                                        margin: 5px 3px;
+                                        color: red;
+                                        font-size: 17px;
+                                        ">
+                                            {% for error in form.guest.errors %}
+                                                <span>{{error}}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                        <div class="input-group-append">
+                                            <div style="top: 47px;" class="input-group-text"><i class="fa fa-chevron-down"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="input-group date" id="date" data-target-input="nearest">
+                                        <input id="id_date" name="date" type="datetime-local" class="form-control datetimepicker-input" placeholder="تاریخ">
+                                        {% if form.date.errors %}
+                                        <div style="
+                                          width: 1000px;
+                                        direction: rtl;
+                                        text-align: right;
+                                        margin: 5px 3px;
+                                        color: red;
+                                        font-size: 17px;
+                                        ">
+                                            {% for error in form.date.errors %}
+                                                <span>{{error}}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                        <div class="input-group-append" data-target="#date" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn custom-btn" type="submit">رزرو میز</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Booking End -->
+{% endblock %}

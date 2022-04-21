@@ -1,0 +1,46 @@
+{% extends "restaurant/base.html" %}
+{% load site_setting_tags %}
+
+{% block main %}
+    <!-- Carousel Start -->
+    <div class="carousel">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                {% carousel_items %}
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+    <!-- Contact Start -->
+    <div dir="rtl" class="contact text-right">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>ارتباط با ما</p>
+                    <h2>ارتباط برای هرسوالی که دارید</h2>
+                </div>
+
+                <div class="row contact-form">
+                    <div class="col-md-6">
+                        <iframe scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Iran,%20Tehran+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" width="100%" height="600" frameborder="0"><a href="https://www.gps.ie/marine-gps/">navigation gps</a></iframe>
+                    </div>
+                    <div class="col-md-6">
+                        <form method="post" name="sentMessage">{% csrf_token %}
+                            <div class="control-group">
+                                <input name="subject" type="text" class="form-control" id="id_subject" placeholder="موضوع" required="required" data-validation-required-message="Please enter a subject" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <textarea name="message" class="form-control" id="id_message" placeholder="پیام" required="required" data-validation-required-message="Please enter your message"></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div>
+                                <button class="btn custom-btn" type="submit" id="sendMessageButton">ارسال پیام</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <!-- Contact End -->
+{% endblock %}

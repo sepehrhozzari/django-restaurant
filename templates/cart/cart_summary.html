@@ -1,0 +1,116 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+{% load restaurant_tags %}
+
+{% block main %}
+            <!-- Carousel Start -->
+            <div class="carousel">
+                <div class="container-fluid">
+                    <div class="owl-carousel">
+                        <div class="carousel-item">
+                            <div class="carousel-img">
+                                <img src="{% static 'restaurant/img/grocery-shopping.jpg' %}" alt="Image">
+                            </div>
+                            <div class="carousel-text">
+                                <h1></h1>
+                                <p>
+                                    به راحتی محصول دلخواه را به سبد خرید اضافه کنید
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="carousel-img">
+                                <img src="{% static 'restaurant/img/carousel-1.jpg' %}" alt="Image">
+                            </div>
+                            <div class="carousel-text">
+                                <h1>بهترین قیمت ها</h1>
+                                <p>
+                                    بهترین کیفیت در کنار بهترین قیمت
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Carousel End -->
+            <main>
+                {% if messages %}
+                    {% for message in messages %}
+                        <h5 class="alert alert-{{ message.tags }}" style="text-align: right; font-size: 18px; margin: 10px 45px 0px 45px;">{{ message }}</h5>
+                    {% endfor %}
+                {% endif %}
+                <div class="container">
+            
+                <div class="table-responsive text-nowrap">
+                    <h2 style="margin-top: 25px;" class="text-center"><mark style="border-radius: 10%;">سبد خرید</mark></h2>
+                    
+                    <table dir="rtl" class="table text-right mt-5">
+                        <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">عنوان</th>
+                        <th scope="col">تعداد</th>
+                        <th scope="col">قیمت کلی</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for cart_item in object.items.all %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>
+                            <div style="display: flex; flex-direction: row;">
+                                <img class="rounded" src="{{ cart_item.item.image.url }}" alt="{{ cart_item.item.name }}" height="80" width="80">
+                                <span class="mr-2">{{ cart_item.item.name }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="{% url 'cart:single_cart_item_delete' cart_item.item.pk cart_item.item.name %}"><i class="fas fa-minus mr-2"></i></a>
+                            {{ cart_item.quantity }}
+                            <a href="{% url 'cart:add_to_cart' cart_item.item.pk cart_item.item.name %}"><i class="fas fa-plus ml-2"></i></a>
+                        </td>
+                        <td>
+                        <div style="display: flex; flex-direction: column;">
+                            <del class="text-danger">{{ cart_item.total_price|persian_price_word }}</del>
+                            <span class="text-success">{{ cart_item.total_discount_price|persian_price_word }}</span>
+                        </div>
+                        <form method="post" action="{% url 'cart:remove_from_cart' cart_item.item.pk cart_item.item.name %}">{% csrf_token %}
+                            <button style="background-color: #fff; border: #fff 1px solid;" class="fas fa-trash float-left text-danger"></button>
+                        </form>
+                        </td>
+                    </tr>
+                    {% empty %}
+            
+                    <tr>
+                        <td class="alert alert-warning" colspan='5'>سبد خرید شما خالی میباشد</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                        <a class='btn btn-primary float-right' href="{% url 'restaurant:home' %}">ادامه دادن به خرید</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if object.total_discount_price %}
+                    <tr>
+                        <td colspan="4">
+                            <b>قیمت کلی سبد خرید:</b>
+                            <span style="display: flex; flex-direction: column; width: 300px;">
+                                <del class="text-danger">{{ object.total_price|persian_price_word }}</del>
+                                <span style="margin-top: -5px;" class="text-success">{{ object.total_discount_price|persian_price_word }}</span>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                        <a class='btn btn-success float-right ml-2' href="{% url 'cart:payment' %}">پرداخت</a>
+                        <a class='btn btn-primary float-right' href="{% url 'restaurant:home' %}">ادامه دادن به خرید</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            
+                </div>
+            
+                </div>
+              </main>
+{% endblock %}

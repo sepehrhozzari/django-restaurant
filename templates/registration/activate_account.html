@@ -1,0 +1,15 @@
+{% autoescape off %}
+<html>
+    <head>
+        <style>
+            @import url('https://v1.fontapi.ir/css/Sahel:400');
+        </style>
+    </head>
+    <body>
+        <div style="font-family: 'Sahel', sans-serif;" dir="rtl" class="text-center">
+            سلام <strong>{{ user.get_full_name }}</strong>
+            لطفا برای فعال سازی اکانت خود روی <a href="http://{{ domain }}{% url 'account:activate' uid token %}">این لینک کلیک کنید</a>
+        </div>
+    </body>
+</html>
+{% endautoescape %}

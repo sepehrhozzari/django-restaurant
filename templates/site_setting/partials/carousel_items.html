@@ -1,0 +1,61 @@
+{% load static %}
+<div class="carousel-item">
+    <div class="carousel-img">
+        <img src="{% static 'restaurant/img/quick-delivery2.jpg' %}" alt="Image">
+    </div>
+    <div class="carousel-text">
+        <h1>در سریع ترین زمان ممکن</h1>
+        <p>
+            رستوران ما در سریعترین زمان ممکن سفارشتان را به آدرسی که تعیین کرده اید میرساند
+        </p>
+        <div class="carousel-btn">
+            <a class="btn custom-btn" href="{% url 'food_blog:article_list' %}">فود بلاگ</a>
+            <a class="btn custom-btn" href="{% url 'restaurant:book_table' %}">رزرو میز</a>
+        </div>
+    </div>
+</div>
+<div class="carousel-item">
+    <div class="carousel-img">
+        <img src="{% static 'restaurant/img/carousel-1.jpg' %}" alt="Image">
+    </div>
+    <div class="carousel-text">
+        <h1>{{ site_setting.homepage_thumbnail_text1|safe }}</h1>
+        <p>
+            {{ site_setting.homepage_thumbnail_description1 }}
+        </p>
+        <div class="carousel-btn">
+            <a class="btn custom-btn" href="{% url 'food_blog:article_list' %}">فود بلاگ</a>
+            <a class="btn custom-btn" href="{% url 'restaurant:book_table' %}">رزرو میز</a>
+        </div>
+    </div>
+</div>
+<div class="carousel-item">
+    <div class="carousel-img">
+        <img src="{% static 'restaurant/img/carousel-2.jpg' %}" alt="Image">
+    </div>
+    <div class="carousel-text">
+        <h1>{{ site_setting.homepage_thumbnail_text2|safe }}</h1>
+        <p>
+            {{ site_setting.homepage_thumbnail_description2 }}
+        </p>
+        <div class="carousel-btn">
+            <a class="btn custom-btn" href="{% url 'food_blog:article_list' %}">فود بلاگ</a>
+            <a class="btn custom-btn" href="{% url 'restaurant:book_table' %}">رزرو میز</a>
+        </div>
+    </div>
+</div>
+<div class="carousel-item">
+    <div class="carousel-img">
+        <img src="{% static 'restaurant/img/carousel-3.jpg' %}" alt="Image">
+    </div>
+    <div class="carousel-text">
+        <h1>{{ site_setting.homepage_thumbnail_text3|safe }}</h1>
+        <p>
+            {{ site_setting.homepage_thumbnail_description3 }}
+        </p>
+        <div class="carousel-btn">
+            <a class="btn custom-btn" href="{% url 'food_blog:article_list' %}">فود بلاگ</a>
+            <a class="btn custom-btn" href="{% url 'restaurant:book_table' %}">رزرو میز</a>
+        </div>
+    </div>
+</div>

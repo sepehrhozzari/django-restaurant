@@ -1,0 +1,139 @@
+{% load static %}
+{% load site_setting_tags  %}
+{% load gravatar %}
+{% load restaurant_tags %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>{% site_title striptags=True %}</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Free Website Template" name="keywords">
+        <meta content="Free Website Template" name="description">
+
+        <!-- Favicon -->
+        <link href="{% static 'restaurant/img/favicon.ico' %}" rel="icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet"> 
+        
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="{% static 'restaurant/lib/animate/animate.min.css' %}" rel="stylesheet">
+        <link href="{% static 'restaurant/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+        <link href="{% static 'restaurant/lib/flaticon/font/flaticon.css' %}" rel="stylesheet">
+        <link href="{% static 'restaurant/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+        {% block extra_css %}
+
+        {% endblock %}
+
+        <!-- Template Stylesheet -->
+        <link href="{% static 'restaurant/css/style.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-light navbar-light">
+            <div class="container-fluid">
+                <a href="{% url 'restaurant:home' %}" class="navbar-brand">{% site_title %}</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav ml-auto">
+                        <form class="mr-2" dir="rtl" action="{% url 'restaurant:search' %}">
+                            <input class="nav-search-input form-control" type="text" name="search_queryset" placeholder="جستجو در بین غذا ها">
+                        </form>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">صفحه های دیگر</a>
+                            <div class="dropdown-menu">
+                                <a href="{% url 'food_blog:article_list' %}" class="dropdown-item">وبلاگ ها</a>
+                            </div>
+                        </div>
+                        {% nav_link request "chefs" "آشپز ها" %}
+                        {% nav_link request "about" "درباره ما" %}
+                        {% nav_link request "contact" "ارتباط با ما" %}
+                        {% nav_link request "book_table" "رزرو میز" %}
+                        <a href="{% url 'cart:cart_summary' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'cart_summary' %}active{% endif %}"><i class="fa-solid fa-cart-shopping mb-2" style="font-size: 16px; margin-right: 7px;"></i>سبد خرید</a>
+                        {% nav_link request "home" "خانه" %}
+                        {% if not user.is_authenticated %}
+                            <a href="{% url 'login' %}" class="nav-item nav-link active my-nav-item">ثبت نام/ ورود</a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'account:dashboard' %}" class="nav-item nav-link active">
+                        {% if user.profile_picture %}
+                            <img style="border-radius: 50%;" src="{{ user.profile_picture.url }}" alt="{{ user.get_full_name }}" width="45" height="45">
+                        {% else %}
+                            <img style="border-radius: 50%;" src="{% gravatar_url user.email 150 %}" alt="{{ user.get_full_name }}" width="45" height="45">
+                        {% endif %}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Nav Bar End -->
+
+        {% block main %}
+
+        {% endblock %}
+
+        <!-- Footer Start -->
+        <div dir="rtl" class="footer text-right">
+            <div class="container">
+                <div class="row w-100">
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% footer_addresses %}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin: 0 180px 70px 0;" class="col-lg-5">
+                        <div class="row">
+                            <div>
+                                <strong><span style="color: #fbaf32;">رستوران</span> {% site_title %}:</strong> <br>
+                                {% footer_text %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <div class="container">
+                    &copy; Copyright <br>
+                    <p>تمامی حقوق برای وبسایت <a href="{% url 'restaurant:home' %}">{% site_title %}</a> محفوظ است.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'restaurant/lib/easing/easing.min.js' %}"></script>
+        <script src="{% static 'restaurant/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'restaurant/lib/tempusdominus/js/moment.min.js' %}"></script>
+        <script src="{% static 'restaurant/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+        <script src="{% static 'restaurant/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+        
+        <!-- Contact Javascript File -->
+        <script src="{% static 'restaurant/mail/jqBootstrapValidation.min.js' %}"></script>
+        <script src="{% static 'restaurant/mail/contact.js' %}"></script>
+
+        <!-- Template Javascript -->
+        <script src="{% static 'restaurant/js/main.js' %}"></script>
+
+        {% block extra_scripts %}
+
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,46 @@
+{% extends 'registration/base.html' %}
+{% load gravatar %}
+{% load humanize %}
+{% load restaurant_tags %}
+
+{% block main %}
+    <div class="row mt-2">
+        <div dir="rtl" class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-body">
+                  <div class="d-flex align-items-start align-items-sm-center gap-4">
+                    {% if user.profile_picture %}
+                        <img style="border-radius: 50%;" src="{{ user.profile_picture.url }}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                    {% else %}
+                        <img style="border-radius: 50%;" src="{% gravatar_url user.email 150 %}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                    {% endif %}
+                    <div style="height: 80px; width: 1000px; display: flex; flex-direction: column;">
+                        <span>نام کاربری : {{ user.username }}</span>
+                        <span>ایمیل : {{ user.email }}</span>
+                        {% if user.address %}
+                            <span>آدرس محل : {{ user.address }}</span>
+                        {% else %}
+                            <span>آدرس محل : شما آدرسی ثبت نکرده اید!</span>
+                            <a style="font-size: 14px;" href="{% url 'account:address' %}">برای ثبت آدرس کلیک کنید</a>
+                        {% endif %}
+                    </div>
+                    <div class="button-wrapper">
+                    </div>
+                  </div>
+                </div>
+            </div> 
+            <h3>غذا هایی که اخیرا پسندیده اید:</h3>
+            <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-around;">
+                {% for food in object_list %}
+                    <a href="{% url 'restaurant:food_detail' food.pk food.slug %}" style="background-image: url('{{food.image.url}}'); width: 200px; height: 200px; border-radius: 20%; background-position: center; background-size: cover; background-repeat: no-repeat; position: relative;display: flex;flex-direction: column;justify-content: flex-start;">
+                        <div style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: #45454585; border-radius: 20%;"></div>
+                        <h6 style="margin: 13px 18px 0 0; color: aliceblue; z-index: 5; font-size: 19px;">{{ food.name }}</h6>
+                        <del style="margin: 100px 18px 0px 0px; color: aliceblue; z-index: 5; font-size: 16px;">{{ food.price|persian_price_word }}</del>
+                        <h4 style="margin: 0px 18px 0px 0px; color: aliceblue; z-index: 5; font-size: 17px;">{{ food.discount_price|persian_price_word }}</h4>
+                    </a>
+                {% empty %}
+                    <span style="background-color: #fbaf32;" class="p-2 rounded text-white">شما فعلا هیچ غذایی نپسندیده اید</span>
+                {% endfor %}
+            </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "restaurant/base.html" %}
+{% load static %}
+{% load gravatar %}
+{% load comment_tags %}
+
+
+{% block main %}
+    <!-- Carousel Start -->
+    <div class="carousel">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="{% static 'restaurant/img/food_blog1.jpg' %}" alt="عکس فود بلاگ">
+                    </div>
+                    <div dir="rtl" class="carousel-text">
+                        <h1 style="color: aliceblue; margin-bottom: 10px;">بخش مقالات برای غذا ها</h1>
+                        <p class="mr-5">
+                            بهترین و با جزئیات ترین مقاله ها برای آشپزی
+                        </p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="{% static 'restaurant/img/food_blog6.jpg' %}" alt="عکس فود بلاگ">
+                    </div>
+                    <div dir="rtl" class="carousel-text">
+                        <h2 style="color: aliceblue;">با خوندن این مقالات یک آشپز حرفه ای میشی</h2>
+                        <p>
+                            با کیفیت ترین روش ها برای آشپزی
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+
+    <!-- Single Post Start-->
+        <div dir="rtl" class="single text-right">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="single-content">
+                            <img src="{{ object.thumbnail.url }}" />
+                            <h2>{{ object.title }}</h2>
+                            <p>
+                                {{ object.description|safe|linebreaks }}
+                            </p>
+                            <strong>تعداد بازدید ها این مقاله: {{ object.hits.count }}</strong>
+                            <div class="mt-2" style="display: flex; flex-direction: row; justify-content: space-between; width: 60px;">
+                                <a class="like-dislike-btn" data-pk="{{ object.pk }}" api-url="{% url 'food_blog:article_api' object.pk %}" href="{% url 'food_blog:dislike' object.pk %}" style="font-size: 17px;margin-top: 1px;"><i class="fa fa-thumbs-down"></i></a>
+                                <span id="dislike-count-{{ object.pk }}" style="margin-right: 2px;">{{ object.dislikes.count }}</span>
+                                <a class="like-dislike-btn" data-pk="{{ object.pk }}" api-url="{% url 'food_blog:article_api' object.pk %}" href="{% url 'food_blog:like' object.pk %}" style="font-size: 17px; margin-top: -2px; margin-right: 15px;"><i class="fa fa-thumbs-up"></i></a>
+                                <span id="like-count-{{ object.pk }}" style="margin-right: 2px;">{{ object.likes.count }}</span>
+                            </div>
+                        </div>
+                        <div class="single-bio">
+                            <div class="single-bio-img">
+                                {% if object.author.profile_picture %}
+                                    <img src="{{ object.author.profile_picture.url }}" />
+                                {% else %}
+                                    <img src="{% gravatar_url object.author.email 150 %}" />
+                                {% endif %}
+                            </div>
+                            <div class="single-bio-text">
+                                <h3>نویسنده: {{ object.author.get_full_name }}</h3>
+                                <p class="mr-2">
+                                    بیوگرافی: {{ object.author.bio }}
+                                </p>
+                            </div>
+                        </div>
+                        {% render_comments object request %}
+                    </div>
+                    {% include "food_blog/sidebar.html" %}
+                </div>
+            </div>
+        </div>
+    <!-- Single Post End-->
+
+{% block extra_scripts %}
+    <!-- scripts for like and dislike with ajax -->
+    <script>
+        function get_likes_dislikes(link, id) {
+            $.ajax({
+                url: link,
+                success: function(s) {
+                    if (s.is_authenticated) {
+                        $('#like-count-' + id).html(s.likes)
+                        $('#dislike-count-' + id).html(s.dislikes)
+                    } else {
+                        $('#alert-login-' + id).css({
+                            'display': 'inline'
+                        })
+                    }
+                },
+                error: function(e) {
+                    console.log("error 2")
+                }
+            })
+        }
+
+
+        $(".like-dislike-btn").click(function(e) {
+            e.preventDefault()
+            var id = $(this).attr("data-pk")
+            var link = "/food-blog/api/" + id
+            var url = $(this).attr("href")
+            $.ajax({
+                url: url,
+                success: function(success) {
+                    get_likes_dislikes(link, id)
+                },
+                error: function(error) {
+                    console.log("error 1")
+                }
+            })
+        })
+    </script>
+{% endblock %}
+
+{% endblock %}

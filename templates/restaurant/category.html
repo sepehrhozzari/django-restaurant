@@ -1,0 +1,152 @@
+{% extends 'restaurant/base.html' %}
+{% load static %}
+{% load restaurant_tags %}
+
+{% block main %}
+        <!-- Carousel Start -->
+        <div class="carousel">
+                        <div class="container-fluid">
+                            <div class="owl-carousel">
+                                <div class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="{{ category.image.url }}" alt="Image">
+                                    </div>
+                                    <div class="carousel-text">
+                                        <h1>به دسته‌بندی <span>{{ category.title }}</span> خوش آمدید</h1>
+                                        <p>
+                                            
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--  -->
+                                {% for food in object_list %}
+                                <a href="{% url 'restaurant:food_detail' food.pk food.slug  %}" class="carousel-item">
+                                    <div class="carousel-img">
+                                        <img src="{{ food.image.url }}" alt="{{ food.name }}">
+                                    </div>
+                                    <div dir="rtl" class="carousel-text">
+                                        <h2 href="{% url 'restaurant:food_detail' food.pk food.slug  %}" style="color: aliceblue;">{{ food.name }} جزو غذاهای این دسته بندی است</h2>
+                                        <p>
+                                            توضیحات این غذا : {{ food.description }}
+                                        </p>
+                                        <h2 style="color: aliceblue;"><del style="color: aliceblue;">قیمت اصلی : {{ food.price|persian_price_word }} تومان</del></h2>
+                                        <h2 style="color: aliceblue;">قیمت با تخفیف : {{ food.discount_price|persian_price_word }} تومان</h2>
+                                    </div>
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+        </div>
+        <!-- Carousel End -->
+        <!-- Menu Start -->
+        <div class="menu">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2>منوی دسته‌ بندی <mark style="border-radius: 20%;">{{ category }}</mark></h2>
+                </div>
+                <div class="menu-tab">
+                    <div class="tab-content">
+                        <div id="burgers" class="container tab-pane active">
+                            <div class="row">
+                                <div class="col-lg-7 col-md-12" style="text-align: right;">
+                                    {% for food in object_list %}
+                                    <a href="{% url 'restaurant:food_detail' food.pk food.slug  %}">
+                                        <div style="margin-top: 40px;" class="menu-item">
+                                            <div class="menu-img">
+                                                <img src="{{ food.image.url }}" alt="{{ food.name }}">
+                                            </div>
+                                            <div class="menu-text text-right">
+                                                {% if food.check_super_sell %}
+                                                <strong style="color:  red; font-size: x-large;">تخفیف ویژه</strong>
+                                                {% endif %}
+                                                <strong><del style="color: red; font-size: x-large;">{{ food.price|persian_price_word }}</del></strong>
+                                                <h3 style="text-align: right;"><span>{{ food.name }}</span> <strong dir="rtl">{{ food.discount_price|persian_price_word }}</strong></h3>
+                                                <div style="display: flex; flex-direction: row-reverse; justify-content: space-between; position: absolute; top: 70px; width: 60px; right: 0; margin-top: 6px;">
+                                                    <a class="like-dislike-btn" data-pk="{{ food.pk }}" href="{% url 'restaurant:dislike' food.pk %}" style="font-size: 17px;margin-top: 1px;"><i class="fa fa-thumbs-down"></i></a>
+                                                    <span id="dislike-count-{{ food.pk }}" style="margin-right: 2px;">{{ food.dislikes.count }}</span>
+                                                    <a class="like-dislike-btn" data-pk="{{ food.pk }}" href="{% url 'restaurant:like' food.pk %}" style="font-size: 17px; margin-top: -2px; margin-right: 15px;"><i class="fa like fa-thumbs-up"></i></a>
+                                                    <span id="like-count-{{ food.pk }}" style="margin-right: 2px;">{{ food.likes.count }}</span>
+                                                </div>
+                                                <div style="display: flex; flex-direction: row-reverse; justify-content: space-between; position: absolute; top: 70px; width: 100px; right: 0; margin-top: 24px;">
+                                                    <p>بازدید ها: {{ food.hits.count }}</p>
+                                                </div>
+                                                <p style="width: 450px; text-align: start;">{{ food.description|truncatewords:13 }}</p>
+                                            </div>
+                                        </div>
+                                        <a style="padding: 4px;" class="btn btn-primary" href="{% url 'cart:add_to_cart' food.pk food.slug %}">
+                                            <i style="margin-right: 3px;" class="fa fa-cart-plus"></i>افزودن به سبد خرید</a>
+                                        </a>
+                                    </a>
+                                    {% empty %}
+                                        <div style="font-size: large;" class="badge badge-warning" dir="rtl">{{ user }} عزیز فعلا هیچ غذایی در این دسته بندی موجود نمیباشد</div>
+                                    {% endfor %}
+                                    <div style="
+                                    width: 100%;
+                                    margin-top: 30px;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: space-between;
+                                    " class="mydiv">
+                                        {% if page_obj.has_next %}
+                                            <a href="{% url 'restaurant:category' category.pk category.slug page_obj.next_page_number %}" class="btn btn-success text-light">غذا های بعدی</a>
+                                        {% endif %}
+                                        {% if page_obj.has_previous %}
+                                            <a href="{% url 'restaurant:category' category.pk category.slug page_obj.previous_page_number %}" class="btn btn-dark text-light">غذا های قبلی</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 d-none d-lg-block">
+                                    <img src="{{ category.image.url }}" alt="Image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Menu End -->
+
+
+{% endblock %}
+
+
+{% block extra_scripts %}
+    <!-- scripts for like and dislike with ajax -->
+        <script>
+            function get_likes_dislikes(link, id) {
+                $.ajax({
+                    url: link,
+                    success: function(s) {
+                        if (s.is_authenticated) {
+                            $('#like-count-' + id).html(s.likes)
+                            $('#dislike-count-' + id).html(s.dislikes)
+                        } else {
+                            $('#alert-login-' + id).css({
+                                'display': 'inline'
+                            })
+                        }
+                    },
+                    error: function(e) {
+                        console.log("error 2")
+                    }
+                })
+            }
+    
+    
+            $(".like-dislike-btn").click(function(e) {
+                e.preventDefault()
+                var id = $(this).attr("data-pk")
+                var link = "/api/" + id
+                var url = $(this).attr("href")
+                $.ajax({
+                    url: url,
+                    success: function(success) {
+                        get_likes_dislikes(link, id)
+                    },
+                    error: function(error) {
+                        console.log("error 1")
+                    }
+                })
+            })
+        </script>
+{% endblock %}

@@ -1,0 +1,27 @@
+<div class="sidebar-widget">
+    <div class="tab-post">
+        <ul class="nav nav-pills nav-justified">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#popular">پر بازدید ترین مقالات هفته</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="popular" class="container tab-pane active">
+                {% for article in popular_articles %}
+                    <div class="post-item">
+                        <div class="post-img ml-2">
+                            <img src="{{ article.thumbnail.url }}" />
+                        </div>
+                        <div class="post-text">
+                            <a href="{% url 'food_blog:article_detail' article.pk article.slug %}">{{ article.title }}</a>
+                            <div class="post-meta">
+                                <p><strong>تعداد بازدید ها: {{ article.hits.count }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

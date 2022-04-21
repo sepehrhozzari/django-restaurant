@@ -1,0 +1,22 @@
+<div style="background-color: rgba(0, 0, 0, 0.04);" class="menu">
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="menu-tab">
+            <ul  style="display: flex; flex-direction: row; flex-wrap: wrap;" class="nav nav-pills justify-content-center">
+                {% for food in foods %}
+                    <a href="{% url 'restaurant:food_detail' food.pk food.slug %}">
+                        <li style="margin: 10px 10px; position: relative; text-align: right; border-radius: 10px;" class="nav-item myclassforli">
+                            <h1 style="position: absolute; right: 12px; font-size: xx-large; color: aliceblue; z-index: 5;">{{ food.name }}</h1>
+                            <h4 style="position: absolute; right: 12px; top: 140px; font-size: large; color: aliceblue; z-index: 5;">بازدید ها: {{ food.hits.count }}</h4>
+                            <h4 dir="rtl" style="position: absolute; right: 12px; top: 170px; font-size: large; color: aliceblue; z-index: 5;">آشپز: {{ food.chef.get_full_name }}</h4>
+                            <img src="{{ food.image.url }}" alt="{{ food.name }}" height="200" width="200">
+                            <div style="width: 200px; height: 200px; color: rebeccapurple; position: absolute; z-index: 4; left: 0; bottom: 0; background-color: rgb(0, 0, 0); opacity: 20%; border-radius: 6%;"></div>
+                        </li>
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

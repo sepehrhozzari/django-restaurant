@@ -1,0 +1,312 @@
+{% extends "restaurant/base.html" %}
+{% load restaurant_tags %}
+{% load site_setting_tags %}
+{% load static %}
+{% load food_blog_tags %}
+
+
+{% block main %}
+    <!-- Carousel Start -->
+    <div class="carousel">
+        <div class="container-fluid">
+        <div class="owl-carousel">
+            {% carousel_items %}
+        </div>
+        </div>
+        </div>
+    <!-- Carousel End -->
+
+
+    <!-- Menu Start -->
+    <div class="menu">
+    <div class="container">
+        <div class="section-header text-center">
+            <p>هرغذایی که بخواین اینجا پیدا میشه</p>
+            <h2>دسته بندی غذا ها</h2>
+        </div>
+        <div class="menu-tab">
+            <ul  style="display: flex; flex-direction: row; flex-wrap: wrap;" class="nav nav-pills justify-content-center">
+                {% category_menu %}
+            </ul>
+        </div>
+    </div>
+    </div>
+    <!-- Menu End -->
+
+
+    {% popular_foods %}
+
+
+    <!-- About Start -->
+    <div class="about">
+    <div class="container">
+    <div class="about-start">
+    <div class="col-lg-6">
+        <div class="about-img">
+            <img src="{% static 'restaurant/img/about.jpg' %}" alt="Image">
+            <button type="button" class="btn-play" data-toggle="modal" data-src="https://www.youtube.com/embed/DWRcNpR6Kdc" data-target="#videoModal">
+                <span></span>
+            </button>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="about-content">
+            <div class="section-header">
+                <p>درباره‌ ما</p>
+                <h2>بیش از ۱۵ سال تجربه آشپزی</h2>
+            </div>
+            <div class="about-text">
+                <p>
+                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                </p>
+                <a class="btn custom-btn" href="{% url 'restaurant:contact' %}">ارتباط با ما</a>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Booking Start -->
+    <div class="booking">
+        <div class="container">
+        <div class="row align-items-center">
+        <div class="col-lg-7">
+            <div class="booking-content">
+                <div style="text-align: right;" class="section-header">
+                    <p>رزرو کردن یک میز</p>
+                    <h2>به راحتی در زمان دلخواه</h2>
+                </div>
+                <div class="about-text">
+                    <p style="font-size: 15px;" class="text-right">
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center;" class="col-lg-5">
+            <a style="background-color: #fbaf32; padding: 20px 70px; font-size: xx-large; border-radius: 14px;" class="btn" href="{% url 'restaurant:book_table' %}">
+                رزرو کردن میز
+                برای یک شب دورهمی
+            </a>
+        </div>
+        </div>
+        </div>
+        </div>
+        <!-- Booking End -->
+
+    <!-- Video Modal Start-->
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>        
+        <!-- 16:9 aspect ratio -->
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="" id="video"  allowscriptaccess="always" allow="autoplay"></iframe>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div> 
+    <!-- Video Modal End -->
+
+
+    <!-- Feature Start -->
+    <div class="feature">
+    <div class="container">
+    <div dir="rtl" class="row text-right">
+    <div class="col-lg-5">
+        <div class="section-header">
+            <p>چرا باید ما را انتخاب کنید؟</p>
+            <h2>ویژگی های خاص رستوران {% site_title %}</h2>
+        </div>
+        <div class="feature-text">
+            <div class="feature-img">
+                <div class="row">
+                    <div class="col-6">
+                        <img src="{% static 'restaurant/img/feature-1.jpg' %}" alt="Image">
+                    </div>
+                    <div class="col-6">
+                        <img src="{% static 'restaurant/img/feature-2.jpg' %}" alt="Image">
+                    </div>
+                    <div class="col-6">
+                        <img src="{% static 'restaurant/img/feature-3.jpg' %}" alt="Image">
+                    </div>
+                    <div class="col-6">
+                        <img src="{% static 'restaurant/img/feature-4.jpg' %}" alt="Image">
+                    </div>
+                </div>
+            </div>
+            <p>
+                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.                       
+                <a class="btn custom-btn" href="{% url 'restaurant:book_table' %}">یک میز رزرو کنید</a>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="feature-item">
+                    <i class="flaticon-cooking"></i>
+                    <h3>بهترین شف های ایران</h3>
+                    <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.                       
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="feature-item">
+                    <i class="flaticon-vegetable"></i>
+                    <h3>مواد اولیه طبیعی</h3>
+                    <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.                       
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="feature-item">
+                    <i class="flaticon-medal"></i>
+                    <h3>بهترین کیفیت محصولات</h3>
+                    <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.                       
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="feature-item">
+                    <i class="flaticon-meat"></i>
+                    <h3>سبزیجات تازه</h3>
+                    <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.                       
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="feature-item">
+                    <i class="flaticon-courier"></i>
+                    <h3>ارسال فوق سریع</h3>
+                    <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.                       
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="feature-item">
+                    <i class="flaticon-fruits-and-vegetables"></i>
+                    <h3>گوشت چرخ کرده و کم چرب</h3>
+                    <p>
+                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.                       
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- Feature End -->
+
+
+    <!-- Team Start -->
+    <div class="team">
+    <div class="container">
+    <div class="section-header text-center">
+    <p>تیم ما</p>
+    <h2>شف های حرفه ای ما</h2>
+    </div>
+    <div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="team-item">
+            <div class="team-img">
+                <img src="{% static 'restaurant/img/team-1.jpg' %}" alt="Image">
+                <div class="team-social">
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="team-text">
+                <h2>Adam Phillips</h2>
+                <p>CEO, مدیر</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="team-item">
+            <div class="team-img">
+                <img src="{% static 'restaurant/img/team-2.jpg' %}" alt="Image">
+                <div class="team-social">
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="team-text">
+                <h2>Dylan Adams</h2>
+                <p>آشپز حرفه ای</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="team-item">
+            <div class="team-img">
+                <img src="{% static 'restaurant/img/team-3.jpg' %}" alt="Image">
+                <div class="team-social">
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="team-text">
+                <h2>Jhon Doe</h2>
+                <p>آشپز حرفه ای</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="team-item">
+            <div class="team-img">
+                <img src="{% static 'restaurant/img/team-4.jpg' %}" alt="Image">
+                <div class="team-social">
+                    <a href=""><i class="fab fa-twitter"></i></a>
+                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a href=""><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="team-text">
+                <h2>Josh Dunn</h2>
+                <p>آشپز حرفه ای</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- Team End -->
+
+
+    <!-- Blog Start -->
+    <div class="blog">
+    <div class="container">
+    <div class="section-header text-center">
+    <p>فود بلاگ</p>
+    <h2>آخرین مقالات از فود بلاگ</h2>
+    </div>
+    <div class="row">
+        {% latest_articles %}
+    </div>
+    </div>
+    </div>
+    <!-- Blog End -->
+{% endblock %}

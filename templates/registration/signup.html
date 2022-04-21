@@ -1,0 +1,113 @@
+{% extends "registration/login_base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block main %}
+<div class="container-login100" style="background-image: url('{% static "registration/login/images/bg-01.jpg" %}');">
+	<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
+		{% if messages %}
+			<div dir="rtl" class="login100-form validate-form">
+				<span class="login100-form-title p-b-37">
+					صفحه ثبت نام
+				</span>
+				{% for message in messages %}
+					<div class="signup-success">
+						<span style="color: #4b2354;">{{ message }}</span>
+					</div>
+				{% endfor %}
+				<a href="{% url 'restaurant:home' %}" class="login100-form-btn">
+					بازگشت به خانه
+				</a>
+			</div>
+		{% else %}
+		<form dir="rtl" class="login100-form validate-form" method="post">
+			{% csrf_token %}
+			<span class="login100-form-title p-b-37">
+				صفحه ثبت نام
+			</span>
+			
+			<div class="wrap-input100 validate-input m-b-20">
+				{{ form.username|add_class:"input100" }}
+				<span class="focus-input100"></span>
+			</div>
+			{% if form.username.errors %}
+				<div class="error" style="width: 100%;text-align: start;margin-top: -15px;margin-bottom: 10px;margin-right: 10px;">
+					{% for error in form.username.errors %}
+						<span style="color: red;">{{ error }}</span>
+					{% endfor %}
+				</div>
+			{% endif %}
+			<div class="wrap-input100 validate-input m-b-20">
+				{{ form.email|add_class:"input100" }}
+				<span class="focus-input100"></span>
+			</div>
+			{% if form.email.errors %}
+				<div class="error" style="width: 100%;text-align: start;margin-top: -15px;margin-bottom: 20px;margin-right: 10px;">
+					{% for error in form.email.errors %}
+						<span style="color: red;">{{ error }}</span>
+					{% endfor %}
+				</div>
+			{% endif %}
+			<div style="margin-top: -15px; margin-bottom: 10px; font-size: 14px;" class="text-center">{{ form.email.help_text }}</div>
+		
+			<div class="wrap-input100 validate-input m-b-25">
+				{{ form.password1|add_class:"input100" }}
+				<span class="focus-input100"></span>
+			</div>
+			{% if form.password1.errors %}
+				<div class="error" style="width: 100%;text-align: start;margin-top: -15px;margin-bottom: 10px;margin-right: 10px;">
+					{% for error in form.password1.errors %}
+						<span style="color: red;">{{ error }}</span>
+					{% endfor %}
+				</div>
+			{% endif %}
+		
+			<div class="wrap-input100 validate-input m-b-25">
+				{{ form.password2|add_class:"input100" }}
+				<span class="focus-input100"></span>
+			</div>
+			{% if form.password2.errors %}
+				<div class="error" style="width: 100%;text-align: start;margin-top: -15px;margin-bottom: 10px;margin-right: 10px;">
+					{% for error in form.password2.errors %}
+						<span style="color: red;">{{ error }}</span>
+					{% endfor %}
+				</div>
+			{% endif %}
+		
+			<div class="container-login100-form-btn">
+				<button class="login100-form-btn">
+					ثبت نام
+				</button>
+			</div>
+		
+			<div class="text-center p-t-57 p-b-20">
+				<span class="txt1">
+					یا با گوگل و فیسبوک وارد شوید
+				</span>
+			</div>
+		
+			<div class="flex-c p-b-112">
+				<a href="{% url 'social:begin' 'google-oauth2' %}" class="login100-social-item">
+					<img src="{% static 'registration/login/images/icons/icon-google.png' %}" alt="GOOGLE">
+				</a>
+
+				<a href="{% url 'social:begin' 'facebook' %}" class="login100-social-item">
+					<img src="{% static 'registration/login/images/icons/icon-facebook.png' %}" alt="FACEBOOK">
+				</a>
+			</div>
+		
+		
+			<div style="margin-bottom: 20px;" class="text-center">
+				<a href="{% url 'login' %}" class="txt2 hov1">
+					اکانتی دارید؟ وارد شوید
+				</a>
+			</div>
+			<a href="{% url 'restaurant:home' %}" class="login100-form-btn">
+				بازگشت به خانه
+			</a>
+		</form>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

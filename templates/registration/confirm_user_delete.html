@@ -1,0 +1,47 @@
+{% extends "registration/base.html" %}
+{% load gravatar %}
+
+
+{% block main %}
+    <div class="row mt-2 text-danger">
+        <div dir="rtl" class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                  {% if user.profile_picture %}
+                      <img style="border-radius: 50%;" src="{{ user.profile_picture.url }}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                  {% else %}
+                      <img style="border-radius: 50%;" src="{% gravatar_url user.email 150 %}" alt="user-avatar" class="d-block" id="uploadedAvatar" width="80" height="80">
+                  {% endif %}
+                  <div style="height: 80px; width: 1000px; display: flex; flex-direction: column;">
+                      <span>نام کاربری : {{ user.username }}</span>
+                      <span>ایمیل : {{ user.email }}</span>
+                      {% if user.address %}
+                          <span>آدرس محل : {{ user.address }}</span>
+                      {% else %}
+                          <span>آدرس محل : شما آدرسی ثبت نکرده اید!</span>
+                          <a style="font-size: 14px;" href="{% url 'account:address' %}">برای ثبت آدرس کلیک کنید</a>
+                      {% endif %}
+                  </div>
+                  <div class="button-wrapper">
+                  </div>
+                </div>
+              </div>
+            <hr class="my-0">
+            <div class="card-body">
+                <form id="formAccountSettings" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <strong class="text-danger"><b>آیا از حذف اکانت خود مطمئن هستید؟</b></strong>
+                        <strong class="text-danger"><b>اگر یکبار اکانت خود را حذف کنید دیگر قابلیت بازگشت وجود ندارد</b></strong>
+                        {{ form }}
+                    <div class="mt-2">
+                    <button type="submit" class="btn btn-danger me-2">حذف اکانت</button>
+                    <a class="btn btn-success" href="{% url 'account:dashboard' %}">انصراف</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "restaurant/base.html" %}
+{% load site_setting_tags %}
+{% load static %}
+
+
+{% block main %}
+    <!-- Carousel Start -->
+    <div class="carousel">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                {% carousel_items %}
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+    
+
+        <!-- Team Start -->
+        <div class="team">
+            <div class="container">
+            <div class="section-header text-center">
+            <p>تیم ما</p>
+            <h2>شف های حرفه ای ما</h2>
+            </div>
+            <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="team-item">
+                    <div class="team-img">
+                        <img src="{% static 'restaurant/img/team-1.jpg' %}" alt="Image">
+                        <div class="team-social">
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                            <a href=""><i class="fab fa-facebook-f"></i></a>
+                            <a href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-text">
+                        <h2>Adam Phillips</h2>
+                        <p>CEO, مدیر</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-item">
+                    <div class="team-img">
+                        <img src="{% static 'restaurant/img/team-2.jpg' %}" alt="Image">
+                        <div class="team-social">
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                            <a href=""><i class="fab fa-facebook-f"></i></a>
+                            <a href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-text">
+                        <h2>Dylan Adams</h2>
+                        <p>آشپز حرفه ای</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-item">
+                    <div class="team-img">
+                        <img src="{% static 'restaurant/img/team-3.jpg' %}" alt="Image">
+                        <div class="team-social">
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                            <a href=""><i class="fab fa-facebook-f"></i></a>
+                            <a href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-text">
+                        <h2>Jhon Doe</h2>
+                        <p>آشپز حرفه ای</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="team-item">
+                    <div class="team-img">
+                        <img src="{% static 'restaurant/img/team-4.jpg' %}" alt="Image">
+                        <div class="team-social">
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                            <a href=""><i class="fab fa-facebook-f"></i></a>
+                            <a href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-text">
+                        <h2>Josh Dunn</h2>
+                        <p>آشپز حرفه ای</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            <!-- Team End -->
+{% endblock %}
