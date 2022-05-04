@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (
     CreateView,
     ListView,
@@ -62,7 +63,7 @@ def activate(request, uidb64, token):
         return redirect("account:signup")
 
 
-class Dashboard(ListView):
+class Dashboard(LoginRequiredMixin, ListView):
     template_name = "registration/dashboard.html"
 
     def get_queryset(self):
@@ -70,7 +71,7 @@ class Dashboard(ListView):
         return user.likes.active()[:6]
 
 
-class Profile(UpdateView):
+class Profile(LoginRequiredMixin, UpdateView):
     template_name = "registration/profile.html"
     form_class = ProfileForm
     success_url = reverse_lazy("account:profile")
@@ -85,7 +86,7 @@ class Profile(UpdateView):
         return kwargs
 
 
-class Address(UpdateView):
+class Address(LoginRequiredMixin, UpdateView):
     template_name = "registration/address.html"
     form_class = AddressForm
     success_url = reverse_lazy("account:address")
@@ -95,7 +96,7 @@ class Address(UpdateView):
         return get_object_or_404(User, pk=pk)
 
 
-class CartHistory(ListView):
+class CartHistory(LoginRequiredMixin, ListView):
     template_name = "registration/cart_history.html"
     paginate_by = 8
 
@@ -103,15 +104,15 @@ class CartHistory(ListView):
         return Cart.objects.optimazed().filter(user=self.request.user, is_paid=True)
 
 
-class BookedTables(TemplateView):
+class BookedTables(LoginRequiredMixin, TemplateView):
     template_name = "registration/booked_tables.html"
 
 
-class SendedContactMessages(TemplateView):
+class SendedContactMessages(LoginRequiredMixin, TemplateView):
     template_name = "registration/sended_contact_messages.html"
 
 
-class DeleteAccount(DeleteView):
+class DeleteAccount(LoginRequiredMixin, DeleteView):
     model = User
     template_name = "registration/confirm_user_delete.html"
     success_url = reverse_lazy("login")
