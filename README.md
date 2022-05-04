@@ -15,32 +15,37 @@ First **clone** this project.
 git clone https://github.com/sepehrhozzari/django-restaurant.git
 ```
 
-Then create **virtualenv** as below.
+Then create **volumes** as below.
+
+
+```bash 
+docker volume create static_volume
+docker volume create media_volume
+```
+
+
+You need to create .env file in the project root file with default values.
+
 
 ```bash 
 cd django-restaurant
-virtualenv .venv
-source .venv/bin/activate
+touch .env
 ```
 
-install **requirements**.
-
-```bash 
-pip install -r requirements.txt
-```
-
-
-You need to create .env file in the project root file.
-
-## .env
+## django-restaurant/.env
 
 ```python
+DJANGO_SUPERUSER_PASSWORD='Your password for superuser'
+
 SECRET_KEY = 'Your SECRET_KEY'
 
-DB_NAME = 'Your DB_NAME'
-DB_USER = 'Your DB_USER'
-DB_PASSWORD = 'Your DB_PASSWORD'
-DB_HOST = 'Your DB_HOST'
+
+POSTGRES_DB = "Your POSTGRES_DB"
+POSTGRES_USER = "Your POSTGRES_USER"
+POSTGRES_PASSWORD = "Your POSTGRES_PASSWORD"
+POSTGRES_HOST = "postgresql"
+POSTGRES_PORT = "5432"
+
 
 EMAIL_HOST = 'Your EMAIL_HOST'
 EMAIL_PORT = 'Your EMAIL_PORT'
@@ -57,13 +62,33 @@ SOCIAL_AUTH_FACEBOOK_KEY = 'Your SOCIAL_AUTH_FACEBOOK_KEY'
 SOCIAL_AUTH_FACEBOOK_SECRET = 'Your SOCIAL_AUTH_FACEBOOK_SECRET'
 
 ```
+also You need to create **.env** file and **data** folder in the postgresql folder
 
-finally migrate and runserver.
 
 ```bash 
-python3 manage.py migrate
-python3 manage.py runserver
+cd postgresql
+touch .env
+mkdir data
 ```
+
+## django-restaurant/postgresql/.env
+
+```python
+POSTGRES_USER = "Your POSTGRES_USER"
+POSTGRES_PASSWORD = "Your POSTGRES_PASSWORD"
+POSTGRES_DB = "Your POSTGRES_DB"
+```
+
+Now run django and postgresql with **docker-compose**.
+
+```bash 
+cd ..
+docker-compose up --build
+```
+
+done. You can see shah berger restaurant web page on http://localhost
+
+
 
 ## Screenshots
 
