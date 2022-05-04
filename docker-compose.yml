@@ -24,10 +24,9 @@ services:
     env_file:
       - ".env"
     volumes:
-      - type: "bind"
-        source: "./"
-        target: "/restaurant"
-
+      - ".:/restaurant"
+      - "static_volume:/restaurant/static"
+      - "media_volume:/restaurant/media"
     depends_on:
       - "postgresql"
 
