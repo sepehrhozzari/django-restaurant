@@ -70,7 +70,8 @@ class Cart(models.Model):
         User, on_delete=models.CASCADE, verbose_name="کاربر", related_name="carts")
     items = models.ManyToManyField(CartItem, verbose_name="محصولات")
     is_paid = models.BooleanField(default=False, verbose_name="پرداخت شده")
-    paid_time = models.DateTimeField(verbose_name="زمان پرداخت")
+    paid_time = models.DateTimeField(
+        verbose_name="زمان پرداخت", null=True, blank=True)
 
     objects = CartManager()
 
