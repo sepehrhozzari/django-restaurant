@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+  postgresql:
+    image: "postgres"
+    container_name: "postgresql"
+    restart: "always"
+    expose:
+      - "5432"
+    env_file:
+      - "./postgresql/.env"
+    volumes:
+      - type: "bind"
+        source: "./postgresql/data"
+        target: "/var/lib/postgresql/data"
+
+  restaurant:
+    build:
+      context: .
+    container_name: "restaurant"
+    restart: "always"
+    expose:
+      - "8000"
+    env_file:
+      - ".env"
+    volumes:
+      - type: "bind"
+        source: "./"
+        target: "/restaurant"
+
+    depends_on:
+      - "postgresql"
+
+  nginx:
+    build:
+      context: "./nginx/"
+    container_name: "nginx"
+    restart: "always"
+    ports:
+      - "80:80"
+    volumes:
+      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "static_volume:/restaurant/static"
+      - "media_volume:/restaurant/media"
+    depends_on:
+      - "postgresql"
+      - "restaurant"
+
+volumes:
+  static_volume:
+    external: true
+  media_volume:
+    external: true
